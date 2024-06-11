@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Start -->
+<div class="container-fluid pt-5 bg-primary hero-header">
+    <div class="container pt-5">
+        <div class="row g-5 pt-5">
+            <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                <h1 class="display-4 text-white mb-4 animated slideInRight">{{workshop.title}}</h1>
+                <nav aria-label="breadcrumb">
+                    <!-- <ol class="breadcrumb justify-content-center justify-content-lg-start mb-0">
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Workshops</li>
+                    </ol> -->
+                </nav>
+            </div>
+            <div class="col-lg-6 align-self-end text-center text-lg-end">
+                <img class="img-fluid" src="{% static 'img/hero-img.png' %}" alt="" style="max-height: 300px;">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+
+<section   id="Workshops" class="ftco-section">
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center mb-5 pb-2">
+  <div class="col-md-8 text-center heading-section ftco-animate">
+    <!-- <h2  class="mb-4 text-center">{{workshop.title}}</h2> -->
+    
+    <h3  style=" text-align: justify;" >Venue:</h3>
+    <p style=" text-align: justify;">{{workshop.venue}}</p>
+
+    <h3  style=" text-align: justify;" >Date:</h3>
+    <p style=" text-align: justify;">{{workshop.date}}</p>
+
+    <h3  style=" text-align: justify;" >Description:</h3>
+    <p style=" text-align: justify;">{{workshop.description}}</p>
+    <!-- <p style=" text-align: justify;">Furthermore, the workshop will explore the specific challenges and opportunities presented by generative AI and LLMs in the Arab world and North Africa. This region, with its rich linguistic and cultural diversity, offers a unique context for the application and development of these technologies. The workshop will discuss how generative AI can contribute to the region's technological advancement while considering the linguistic and cultural nuances.</p>
+    <p style=" text-align: justify;">Bringing together a group of expert scientists and professionals from both academia and industry, the workshop provides a platform for a comprehensive discussion on generative AI and LLMs. Participants will have the opportunity to engage with leading experts, share insights, and explore the future trajectory of these transformative technologies in a global context.</p> -->
+
+</div>
+</div>
+</div>
+</section>
+
+
+<section id="Schedule" class="ftco-section bg-light">
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-8 text-center heading-section ftco-animate">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Speaker</th>
+                                <th>Talk Title</th>
+                                <th>Tentative Time Slot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for conference in workshop.conference_set.all %}
+                            <tr>
+                                <td><a style="color: #3396bd;">{{conference.speaker.name}}</a></td>
+                                <td><a style="color: blue;">{{conference.title}}</a></td>
+                                {% if conference.time%}
+                                <td>{{conference.time}}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Participants Start -->
+<div class="container-fluid bg-light py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-start">
+            <div class="wow fadeIn" data-wow-delay="0.1s">
+                <div class="row g-4">
+                    <!-- Participants -->
+                    <div class="col-12">
+                        <h2 class="text-center mb-5">Speakers & Organizers</h2>
+                    </div>
+                    {% for member in participants %}
+                    <div class="col-md-4 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="team-item bg-white text-center rounded p-4 pt-0">
+                            {% if member.photo %}
+                            <img class="img-fluid rounded-pill p-4" src="{{ member.photo.url }}" alt="{{ member.name }}">
+                            {% else %}
+                            <img class="img-fluid rounded-pill p-4" src="{% static 'img/default_image.png' %}" alt="{{ member.name }}">
+                            {% endif %}
+
+                            <h5 class="mb-0">{{ member.name }}</h5>
+                            <small>{{ member.post }}</small>
+                            <div class="d-flex justify-content-center mt-3">
+                                {% if member.facebook %}
+                                <a class="btn btn-square btn-primary m-1" href="{{ member.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                                {% endif %}
+                               <!--  <a class="btn btn-square btn-primary m-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary m-1" href="#"><i class="fab fa-instagram"></i></a> -->
+                                {% if member.linkedin %}
+                                <a class="btn btn-square btn-primary m-1" href="{{ member.linkedin }}"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Participants End -->
+
+
+
+
+{% endblock %}
